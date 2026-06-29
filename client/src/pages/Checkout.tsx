@@ -227,7 +227,7 @@ export default function Checkout() {
                 <p>✓ شحن آمن</p>
                 <p>✓ منتجات أصلية مضمونة</p>
                 <p>✓ استرجاع مجاني خلال 7 أيام</p>
-                <p className="mt-4 pt-4 border-t border-border">للتواصل: <a href="tel:00774706259" className="hover:text-accent">0774 706 2599</a></p>
+                <p className="mt-4 pt-4 border-t border-border">للتواصل: <a href="https://wa.me/9660774706259" target="_blank" rel="noopener noreferrer" className="hover:text-accent">0774 706 2599</a></p>
               </div>
             </Card>
           </div>
