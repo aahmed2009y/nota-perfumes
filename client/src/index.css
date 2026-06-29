@@ -115,14 +115,15 @@
 
 @layer base {
   * {
-    @apply border-border;
+    border-color: rgb(var(--color-border) / <alpha-value>);
   }
   html {
     direction: rtl;
   }
   body {
-    @apply bg-background text-foreground;
-    font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+    background-color: rgb(var(--color-background) / <alpha-value>);
+    color: rgb(var(--color-foreground) / <alpha-value>);
+    font-family: 'Cairo', 'Tajawal', 'Segoe UI', 'Helvetica Neue', sans-serif;
   }
   ::-webkit-scrollbar {
     width: 8px;
@@ -140,19 +141,35 @@
 }
 
 button:not(:disabled),
-  [role="button"]:not([aria-disabled="true"]),
-  [type="button"]:not(:disabled),
-  [type="submit"]:not(:disabled),
-  [type="reset"]:not(:disabled) {
-  @apply active:scale-95 transition-transform;
+[role="button"]:not([aria-disabled="true"]),
+[type="button"]:not(:disabled),
+[type="submit"]:not(:disabled),
+[type="reset"]:not(:disabled) {
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+button:not(:disabled):active,
+[role="button"]:not([aria-disabled="true"]):active,
+[type="button"]:not(:disabled):active,
+[type="submit"]:not(:disabled):active,
+[type="reset"]:not(:disabled):active {
+  transform: scale(0.95);
 }
 
 .container {
-  @apply max-w-7xl mx-auto px-4;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .flex {
-  @apply min-w-0 min-h-0;
+  display: flex;
+  min-width: 0;
+  min-height: 0;
 }
 
 @tailwind components;
