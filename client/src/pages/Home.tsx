@@ -212,7 +212,7 @@ export default function Home() {
             <div>
               <h4 className="font-bold text-accent mb-4">التواصل</h4>
               <p className="text-sm text-muted-foreground">البريد: info@nota.com</p>
-              <p className="text-sm text-muted-foreground">الهاتف: +964 789 456 123</p>
+              <p className="text-sm text-muted-foreground">الهاتف: <a href="tel:00774706259" className="hover:text-accent transition">0774 706 2599</a></p>
             </div>
           </div>
           <div className="border-t border-border mt-8 pt-8 text-center text-sm text-muted-foreground">
