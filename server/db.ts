@@ -1,6 +1,6 @@
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { InsertUser, users, products, categories, productSizes, cartItems, orders, orderItems } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -89,4 +89,104 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+export async function getUserById(id: number) {
+  const db = await getDb();
+  if (!db) return null;
+  const result = await db.select().from(users).where(eq(users.id, id)).limit(1);
+  return result[0] || null;
+}
+
+// المنتجات
+export async function getAllProducts() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(products);
+}
+
+export async function getProductById(id: number) {
+  const db = await getDb();
+  if (!db) return null;
+  const result = await db.select().from(products).where(eq(products.id, id)).limit(1);
+  return result[0] || null;
+}
+
+export async function getProductsByCategory(categoryId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(products).where(eq(products.categoryId, categoryId));
+}
+
+// الفئات
+export async function getAllCategories() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(categories);
+}
+
+// أحجام المنتجات
+export async function getProductSizes(productId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(productSizes).where(eq(productSizes.productId, productId));
+}
+
+// السلة
+export async function getUserCart(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(cartItems).where(eq(cartItems.userId, userId));
+}
+
+export async function addToCart(userId: number, productId: number, sizeId: number, quantity: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const existing = await db.select().from(cartItems)
+    .where(and(
+      eq(cartItems.userId, userId),
+      eq(cartItems.productId, productId),
+      eq(cartItems.sizeId, sizeId)
+    ))
+    .limit(1);
+  
+  if (existing.length > 0) {
+    // تحديث الكمية
+    return db.update(cartItems)
+      .set({ quantity: existing[0].quantity + quantity })
+      .where(eq(cartItems.id, existing[0].id));
+  }
+  
+  return db.insert(cartItems).values({ userId, productId, sizeId, quantity });
+}
+
+export async function removeFromCart(cartItemId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.delete(cartItems).where(eq(cartItems.id, cartItemId));
+}
+
+export async function updateCartItemQuantity(cartItemId: number, quantity: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.update(cartItems).set({ quantity }).where(eq(cartItems.id, cartItemId));
+}
+
+// الطلبات
+export async function createOrder(userId: number, customerName: string, customerPhone: string, customerAddress: string, totalPrice: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(orders).values({ userId, customerName, customerPhone, customerAddress, totalPrice: totalPrice.toString() as any });
+  return result;
+}
+
+export async function getUserOrders(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(orders).where(eq(orders.userId, userId));
+}
+
+export async function getAllOrders() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(orders);
+}
