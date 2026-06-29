@@ -37,7 +37,7 @@ export default function Home() {
           </button>
 
           <div className="flex-1 flex justify-center">
-            <h1 className="text-2xl font-bold text-accent">زكريا</h1>
+            <h1 className="text-2xl font-bold text-accent">نوتا NOTA</h1>
           </div>
 
           <div className="flex items-center gap-4">
@@ -72,7 +72,7 @@ export default function Home() {
             className="absolute right-0 top-0 h-full w-64 bg-card border-l border-border p-6 space-y-4"
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="text-xl font-bold text-accent">زكريا للعطور</h2>
+            <h2 className="text-xl font-bold text-accent">نوتا NOTA</h2>
             <p className="text-sm text-muted-foreground">متجر العطور الفاخرة</p>
             <div className="space-y-2">
               <Button variant="ghost" className="w-full justify-start" onClick={() => setSelectedCategory(null)}>
@@ -211,12 +211,12 @@ export default function Home() {
             </div>
             <div>
               <h4 className="font-bold text-accent mb-4">التواصل</h4>
-              <p className="text-sm text-muted-foreground">البريد: info@zakaria.com</p>
-              <p className="text-sm text-muted-foreground">الهاتف: +964 123 456 789</p>
+              <p className="text-sm text-muted-foreground">البريد: info@nota.com</p>
+              <p className="text-sm text-muted-foreground">الهاتف: +964 789 456 123</p>
             </div>
           </div>
           <div className="border-t border-border mt-8 pt-8 text-center text-sm text-muted-foreground">
-            <p>&copy; 2026 زكريا للعطور. جميع الحقوق محفوظة.</p>
+            <p>&copy; 2026 نوتا NOTA للعطور. جميع الحقوق محفوظة.</p>
           </div>
         </div>
       </footer>
